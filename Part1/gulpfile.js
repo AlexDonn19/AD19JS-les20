@@ -1,7 +1,7 @@
 'use strict';
  // cssmin = require('gulp-minify-css'),
 var gulp = require('gulp'),
-    watch = require('gulp-watch'),
+    // watch = require('gulp-watch'),
     prefixer = require('gulp-autoprefixer'),
     uglify = require('gulp-uglify'),
     sass = require('gulp-sass'),
@@ -29,13 +29,13 @@ var path = {
         img: 'src/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
         fonts: 'src/fonts/**/*.*'
     },
-    watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
-        html: 'src/**/*.html',
-        js: 'src/js/**/*.js',
-        style: 'src/style/**/*.scss',
-        img: 'src/img/**/*.*',
-        fonts: 'src/fonts/**/*.*'
-    },
+    // watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
+    //     html: 'src/**/*.html',
+    //     js: 'src/js/**/*.js',
+    //     style: 'src/style/**/*.scss',
+    //     img: 'src/img/**/*.*',
+    //     fonts: 'src/fonts/**/*.*'
+    // },
     clean: './build'
 };
 
@@ -128,23 +128,23 @@ gulp.task('build', [
 // попросим gulp каждый раз при изменении какого то файла запускать нужную задачу
 
 
-gulp.task('watch', function(){
-    watch([path.watch.style], function(event, cb) {
-        gulp.start('style:build');
-    });
-    watch([path.watch.html], function(event, cb) {
-        gulp.start('html:build');
-    });
-    watch([path.watch.js], function(event, cb) {
-        gulp.start('js:build');
-    });
-    watch([path.watch.img], function(event, cb) {
-        gulp.start('image:build');
-    });
-    watch([path.watch.fonts], function(event, cb) {
-        gulp.start('fonts:build');
-    });
-});
+// gulp.task('watch', function(){
+//     watch([path.watch.style], function(event, cb) {
+//         gulp.start('style:build');
+//     });
+//     watch([path.watch.html], function(event, cb) {
+//         gulp.start('html:build');
+//     });
+//     watch([path.watch.js], function(event, cb) {
+//         gulp.start('js:build');
+//     });
+//     watch([path.watch.img], function(event, cb) {
+//         gulp.start('image:build');
+//     });
+//     watch([path.watch.fonts], function(event, cb) {
+//         gulp.start('fonts:build');
+//     });
+// });
 
 
 // создать себе локальный веб-сервер
@@ -163,4 +163,4 @@ gulp.task('clean', function (cb) {
 
 // определим дефолтный таск
 
-gulp.task('default', ['build', 'webserver', 'watch']);
+gulp.task('default', ['build']);
