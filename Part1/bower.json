@@ -1,0 +1,26 @@
+{
+  "name": "mod20",
+  "version": "0.0.0",
+  "authors": [
+    "AlexDonn19 <danchukov_don@ukr.net>"
+  ],
+  "license": "ISC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "social-likes": "^3.1.1",
+    "iCheck": "jquery-icheck#^1.0.2",
+    "fotorama": "^4.6.4",
+    "normalize.css": "*"
+  },
+  "description": "",
+  "main": "",
+  "homepage": "",
+  "private": true
+}
