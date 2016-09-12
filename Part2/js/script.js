@@ -6,56 +6,46 @@ $(document).ready(function () {
 jsontext = jsontext.replace(/\r\n/g, '');
 var jsonData = JSON.parse(jsontext);
 
-var skills = [];
-var namesNumFriends = [];
-var friends = [];
+// variant 2
 
 
-_.map(jsonData, function (object) {
-
-    // создать массив скилов
-    object.skills.forEach(function (currentSkill) {
-        skills.push({
-            skill: _.lowerCase(currentSkill)
-        });
-    });
-
-    // создать массив имён с количесвом друзей
-    namesNumFriends.push({
-        name: object.name,
-        num: object.friends.length
-    });
-
-    // Массив всех друзей всех пользователей
-    object.friends.forEach(function (currentFriend) {
-        friends.push(currentFriend.name);
-    });
-
+// создать массив скилов
+var skillsLodash = _.flattenDeep(_.map(jsonData, 'skills'));
+_(skillsLodash).forEach(function (value, index) {
+    skillsLodash[index] = _.lowerCase(value);
 });
-
 
 // взять уникальные имена
-var uniqSkills = _.uniqBy(skills, 'skill');
-// сортировать по имени
-var sortedUniqSkill = _.sortBy(uniqSkills, ['skill']);
-// отдельно массив имён
-var sortedUniqSkillArray = [];
-sortedUniqSkill.forEach(function (obj) {
-    sortedUniqSkillArray.push(obj.skill);
-});
-console.log('Sorted uniq skills = ', sortedUniqSkillArray);
+var uniqSkillsLodash = _.uniq(skillsLodash);
+var sortedUniqSkillsLodash = uniqSkillsLodash.sort();
+console.log('sorted Uniq Skills  = ', sortedUniqSkillsLodash);
 
 
-var sortNamesNumFriends = _.sortBy(namesNumFriends, ['num', 'name']);
-var sortedNamesNumFriendsArray = [];
-sortNamesNumFriends.forEach(function (obj) {
-    sortedNamesNumFriendsArray.push(obj.name);
-});
-console.log('sorted Names by Num Friends = ', sortedNamesNumFriendsArray);
+// создать массив имён с количесвом друзей
+var namesLo = _.map(jsonData, 'name');                 // массив имён
+var NumFriendsLo = _.map(jsonData, 'friends');         // массив друзей
+_.forEach(NumFriendsLo, function (argument, index) {
+    NumFriendsLo[index] = argument.length;
+});                                                    // количество друзей - массив
+
+var namesNumFriendsLo = _.zipObjectDeep(namesLo, NumFriendsLo);
+
+var sortedNames = _.reduce(namesNumFriendsLo, function(result, value, key) {
+  (result[value] || (result[value] = [])).push(key);
+  return result;
+}, {});
+
+var sortedNamesArray = _.flattenDeep(_.map(sortedNames));
+console.log('sortedNames Array = ', sortedNamesArray);
 
 
-var uniqFriends = _.uniq(friends);
-console.log('uniq Friends = ', uniqFriends);
+// Массив всех друзей всех пользователей
+
+var friendsObjLo = _.flattenDeep(_.map(jsonData, 'friends'));
+var friendsArrLo = _.map(friendsObjLo, 'name');
+var uniqFriendsArrLo = _.uniq(friendsArrLo);
+console.log('uniq friends Names Array = ', uniqFriendsArrLo);
+
 
 
 });
